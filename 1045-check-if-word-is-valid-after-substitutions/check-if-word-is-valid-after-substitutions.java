@@ -1,26 +1,28 @@
-import java.util.Stack;
-
 class Solution {
     public boolean isValid(String s) {
-        Stack<Character> stack = new Stack<>();
 
-        for (char ch : s.toCharArray()) {
-            stack.push(ch);
-
-            if (stack.size() >= 3) {
-                int n = stack.size();
-
-                if (stack.get(n - 3) == 'a' &&
-                    stack.get(n - 2) == 'b' &&
-                    stack.get(n - 1) == 'c') {
-
-                    stack.pop();
-                    stack.pop();
-                    stack.pop();
+        Deque <Character> st = new ArrayDeque<>();
+        
+        for (char ch : s.toCharArray()){
+            if (ch == 'a' || ch == 'b'){
+                st.push(ch);
+            } else {
+                if (st.size() < 2){
+                    return false ;
                 }
+                if (st.peek() != 'b'){
+                    return false ;
+                }
+                st.pop();
+                if (st.peek() != 'a'){
+                    return false ;
+                }
+                st.pop();
             }
         }
-
-        return stack.isEmpty();
+        if (st.isEmpty()){
+            return true ;
+        }
+        return false ;
     }
 }
